@@ -316,7 +316,8 @@ function validate(){
         success:function(response){
             console.log(response)
             if(response.status=='login sucessfull'){
-                window.location.replace(`http://127.0.0.1:8000/listjobs/`);
+                console.log("ureka")
+                window.location.assign('http://127.0.0.1:8000/Home/');
             }
          },
          error:function(response){

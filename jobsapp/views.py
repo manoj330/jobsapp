@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 import jobsapp
 from rest_framework import generics
 from rest_framework.views import APIView
@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework import filters
 from django.db.models import Q
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate,login
 from django.contrib.auth import logout
 import json
 import base64
@@ -58,8 +58,9 @@ class LoginORlogout(APIView):
               pwd=base64.b64decode(self.request.GET.get('password')).decode("utf-8")
               print(uname,pwd)
               check_user=authenticate(username=uname, password=pwd)
+              print(check_user,"check")
               if check_user:
-                 print('login sucessfull')
+                 login(self.request,check_user)
                  return Response({'status':'login sucessfull'})
               else:
                  return Response({'status':'login failed'})
@@ -86,8 +87,10 @@ class LoginORlogout(APIView):
               
                  
 def renderjobs(request):
-    return render(request,'jobsapp/list jobs.html')
+    if request.user.is_authenticated==True:
+       return render(request,'jobsapp/list jobs.html')
+    return redirect('login')
 def renderjob(request):
     return render(request,'jobsapp/showjob.html')
-def login(request):
+def logins(request):
   return render(request,'jobsapp/login.html')

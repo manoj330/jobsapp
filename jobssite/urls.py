@@ -21,8 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('getjobs/',views.Jobs.as_view()),
     path('getjob/',views.getjob.as_view()),
-    path('listjobs/',views.renderjobs),
+    path('Home/',views.renderjobs),
     path('renderjob/',views.renderjob),
-    path('login/',views.login),
+    path('login/',views.logins,name='login'),
     path('alogin/',views.LoginORlogout.as_view()), 
 ]
